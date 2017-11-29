@@ -153,7 +153,7 @@ class KodeinInjector : KodeinInjectedBase {
     fun kodein(): Lazy<Kodein> = lazy { _kodein ?: throw UninjectedException() }
 
     override fun inject(kodein: Kodein) {
-        synchronizedIfNull(_lock, this::_kodein, { return }) {
+        synchronized(_lock) {
             _kodein = kodein
 
             _list.forEach { it._inject(kodein.container) }
